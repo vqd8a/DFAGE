@@ -110,7 +110,7 @@ Three output files are generated: simple.dumpdfa (the DFA in the text format), s
 -------------------------------
 You can generate NFA text files, DFA binary files, or MNRL files using VASim with the ANML file as input. See https://github.com/jackwadden/VASim for more details.
 
-$cd VASim
+$ cd VASim
 
 $ ./vasim -n ../DFAGE/bin/data/simple.anml (VASim outputs automata in NFA text format readable by Becchi's tools)
 
