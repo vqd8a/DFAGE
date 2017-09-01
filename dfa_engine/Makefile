@@ -14,7 +14,7 @@ CC=gcc
 ##CUDA_INCLUDE=-I/usr/local/cuda/include
 CUDA_INCLUDE=-I/usr/local/cuda-8.0/include
 
-MNRL         = ../mnrl/C++
+MNRL         = ../MNRL/C++
 MNRL_INCLUDE = $(MNRL)/include
 MNRL_LIB     = $(MNRL)/lib
 JSON11       = $(MNRL_LIB)/json11
