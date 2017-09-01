@@ -3,7 +3,8 @@
 all: mnrl dfa_engine generator copy
 
 mnrl:
-	cd mnrl/C++ && $(MAKE)
+	@git submodule update --init --recursive
+	cd MNRL/C++ && $(MAKE)
 
 dfa_engine:
 	cd dfa_engine && $(MAKE)
@@ -20,4 +21,4 @@ clean:
 	rm -f bin/dfa_engine bin/regex_memory bin/regex_memory_regen
 	cd generator && $(MAKE) clean
 	cd dfa_engine && $(MAKE) clean
-	cd mnrl/C++ && $(MAKE) clean
+	cd MNRL/C++ && $(MAKE) clean
