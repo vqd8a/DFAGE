@@ -1,0 +1,6 @@
+#!/bin/bash
+
+./regex_memory -dfa -n 1 -d -v -f l7-filter.out3 -e mem_out_dfa4.txt
+./regex_memory -dfa -n 1 -d -v -f l7-filter.out0 -e mem_out_dfa1.txt 
+./regex_memory -dfa -n 1 -d -v -f l7-filter.out1 -e mem_out_dfa2.txt
+./regex_memory -dfa -n 1 -d -v -f l7-filter.out2 -e mem_out_dfa3.txt

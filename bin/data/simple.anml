@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<automata-network id="simple">	
+	<state-transition-element id="1" symbol-set="[a]" start="all-input">
+	    <activate-on-match element="2"/>
+	</state-transition-element>
+	
+	<state-transition-element id="2" symbol-set="[b-eg-i]">
+	    <activate-on-match element="2"/>
+	    <activate-on-match element="3"/>
+            <activate-on-match element="4"/>
+            <activate-on-match element="5"/>		
+	</state-transition-element>
+	
+	<state-transition-element id="3" symbol-set="[a]">
+	    <report-on-match reportcode="0"/>
+	</state-transition-element>
+	
+	<state-transition-element id="4" symbol-set="[e]">
+	    <report-on-match reportcode="1"/>
+	</state-transition-element>
+	
+	<state-transition-element id="5" symbol-set="[v]">
+	    <report-on-match reportcode="2"/>
+	</state-transition-element>	
+</automata-network>
