@@ -134,6 +134,7 @@ $ ./dfa_engine -a ./data/simpletwo -i ./data/simpletwo.input -T 1 -g 2 -p 1 -N 6
 $ ./dfa_engine -a ./data/simpletwo -i ./data/simpletwo.input -T 2 -g 2 -p 1 -N 6 -m 1 -O 1
 
 where
+
         -a <file> :   automata name (must NOT contain the file extension)
 
         -i <file> :   input file (with file extension)
