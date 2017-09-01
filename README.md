@@ -108,11 +108,20 @@ Three output files are generated: simple.dumpdfa (the DFA in the text format), s
 
 3.4. Generating DFAs from VASim
 -------------------------------
-You can also gegnerate DFA binary files, NFA text files, or MNRL files from VASim. The VASim will take the original ANML file as its input. See https://github.com/jackwadden/VASim for more details.
+You can generate NFA text files, DFA binary files, or MNRL files using VASim with the ANML file as input. See https://github.com/jackwadden/VASim for more details.
+
+$cd VASim
+
+$ ./vasim -n ../DFAGE/bin/data/simple.anml (VASim outputs automata in NFA text format readable by Becchi's tools)
+
+$ ./vasim -Dn ../DFAGE/bin/data/simple.anml (VASim converts automata to DFA and outputs DFA binary plus DFA text files)
+ 
+$ ./vasim -Dm ../DFAGE/bin/data/simple.anml (VASim converts automata to DFA and outputs DFA in MNRL format)
+
 
 3.5. Running the DFA engine
 ---------------------------
-If you want to run the engine over an input file using the previously generated DFA transition graphs (e.g. simple), you can launch:
+If you want to run the DFA engine over an input file using the previously generated DFA transition graphs (e.g. simple), you can launch:
 
 $ cd bin
 
