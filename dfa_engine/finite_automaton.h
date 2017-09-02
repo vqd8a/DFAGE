@@ -14,12 +14,12 @@
 #include <vector>
 #include <stdio.h>
 #include "common.h"
-#include "finite_automaton.h"
 
 /*------------MNRL------------*/
 #include <unordered_map>
 #include <queue>
 #include "mnrl.hpp"
+#include "parse_symbol_set.h"
 /*------------MNRL------------*/
 
 class FiniteAutomaton {
