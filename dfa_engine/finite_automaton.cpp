@@ -69,10 +69,13 @@ FiniteAutomaton::FiniteAutomaton(istream &file1, istream &file2, const char *pat
                 id_map[node_id] = state_counter++;
 
                 //add a transition rule for every symbol in the symbol_set
-                for(uint32_t i=1 ; i<node->getSymbolSet().length(); i+=4) {//string format: \xFA\xFB\x96\....
+                /*for(uint32_t i=1 ; i<node->getSymbolSet().length(); i+=4) {//string format: \xFA\xFB\x96\....
                     std::string str_hex = "0" + node->getSymbolSet().substr(i,3);
                     int str_int = std::stoi (str_hex,nullptr,16);
                     tmp_next_states[str_int] = id_map[node_id];//register the next state upon receving symbol str_int 
+                }*///OLD WAY
+                for(uint32_t i : getIntegerSymbolSet(node->getSymbolSet())) {
+                    tmp_next_states[i] = id_map[node_id];//register the next state upon receving symbol i 
                 }
 
                 start_states.push_back(node_id);//register start state
@@ -113,10 +116,13 @@ FiniteAutomaton::FiniteAutomaton(istream &file1, istream &file2, const char *pat
                     shared_ptr<MNRLHState> sinknode = dynamic_pointer_cast<MNRLHState>(sinkNode);
 
                     //add a transition rule for every symbol in the symbol_set
-                    for(uint32_t i=1 ; i < sinknode->getSymbolSet().length(); i+=4) {
+                    /*for(uint32_t i=1 ; i < sinknode->getSymbolSet().length(); i+=4) {
                         std::string str_hex = "0" + sinknode->getSymbolSet().substr(i,3);
                         int str_int = std::stoi (str_hex,nullptr,16);
                         tmp_next_states[str_int] = id_map[sinkNode->getId()];//register the next state upon receving symbol i
+                    }*///OLD WAY
+                    for(uint32_t i : getIntegerSymbolSet(sinknode->getSymbolSet())) {
+                        tmp_next_states[i] = id_map[sinkNode->getId()];//register the next state upon receving symbol i
                     }
 
                     //push to todo list if we haven't already been here
@@ -172,10 +178,13 @@ FiniteAutomaton::FiniteAutomaton(istream &file1, istream &file2, const char *pat
                     shared_ptr<MNRLHState> sinknode = dynamic_pointer_cast<MNRLHState>(sinkNode);
 
                     //add a transition rule for every symbol in the symbol_set
-                    for(uint32_t i=1 ; i<sinknode->getSymbolSet().length(); i+=4) {
+                    /*for(uint32_t i=1 ; i<sinknode->getSymbolSet().length(); i+=4) {
                         std::string str_hex = "0" + sinknode->getSymbolSet().substr(i,3);
                         int str_int = std::stoi (str_hex,nullptr,16);
                         tmp_next_states[str_int] = id_map[sinkNode->getId()];//register the next state upon receving symbol i
+                    }*///OLD WAY
+                    for(uint32_t i : getIntegerSymbolSet(sinknode->getSymbolSet())) {
+                        tmp_next_states[i] = id_map[sinkNode->getId()];//register the next state upon receving symbol i
                     }
 
                     //push to todo list if we haven't already been here
