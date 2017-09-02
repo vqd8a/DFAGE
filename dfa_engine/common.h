@@ -17,7 +17,7 @@
 #define TRUE 1
 #define FALSE 0
 
-#define CSIZE 256    //alphabet's size
+#define CSIZE 256 //alphabet's size
 
 typedef unsigned char symbol;//note: each symbol has 1 byte
 typedef unsigned int symboln;//4-byte fetches

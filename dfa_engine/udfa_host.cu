@@ -24,7 +24,6 @@
 #include "mem_controller.h"
 #include "udfa_host.h"
 #include "udfa_gpu.h"
-#include "finite_automaton.h"
 				
 using namespace std;
 

@@ -36,7 +36,7 @@
  */
 
 /*
- * Modified by Vinh Dang <vqd8a@virginia.edu> for use with DFAGE
+ * Modified by Vinh Dang <vqd8a@virginia.edu> for use with DFAGE on Sept-02-2017
  */
 #include <vector>
 #include <string>
@@ -72,7 +72,7 @@ void parseSymbolSet(std::bitset<256> &column, std::string symbol_set) {
         return;
     }
         
-    bool in_charset = false;
+    //bool in_charset = false;
     bool escaped = false;
     bool inverting = false;
     bool range_set = false;

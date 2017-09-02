@@ -21,6 +21,13 @@
 
 #include <algorithm>//for "find" function
 
+/*------------MNRL------------*/
+#include <unordered_map>
+#include <queue>
+#include "mnrl.hpp"
+#include "parse_symbol_set.h"
+/*------------MNRL------------*/
+
 using namespace std;
 using namespace MNRL;//MNRL
 

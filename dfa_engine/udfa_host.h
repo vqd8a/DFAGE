@@ -20,5 +20,5 @@
 class Packets;
  
 unsigned int udfa_run(std::vector<FiniteAutomaton *> fa, Packets &packets, unsigned int n_subsets, unsigned int packet_size, int *rulestartvec, double *t_alloc, double *t_kernel, double *t_collect, double *t_free, int *blocksize, int blksiz_tuning);
- 
+
 #endif

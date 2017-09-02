@@ -15,13 +15,6 @@
 #include <stdio.h>
 #include "common.h"
 
-/*------------MNRL------------*/
-#include <unordered_map>
-#include <queue>
-#include "mnrl.hpp"
-#include "parse_symbol_set.h"
-/*------------MNRL------------*/
-
 class FiniteAutomaton {
     private:
         size_t dfa_state_table_size_;
