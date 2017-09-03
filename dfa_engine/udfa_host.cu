@@ -55,7 +55,7 @@ void GPUMemInfo() {
 /*--------------------------------------------------------------------------------------------------*/
 unsigned int udfa_run(std::vector<FiniteAutomaton *> fa, Packets &packets, unsigned int n_subsets, unsigned int packet_size, int *rulestartvec, double *t_alloc, double *t_kernel, double *t_collect, double *t_free, int *blocksize, int blksiz_tuning){
 
-    struct timeval c0, c1, c2, c3, c4;
+    struct timeval c0, c1, c2, c3, c33, c4;
     long seconds, useconds;
     unsigned int *h_match_count, *d_match_count;
     match_type   *h_match_array, *d_match_array;
@@ -70,13 +70,13 @@ unsigned int udfa_run(std::vector<FiniteAutomaton *> fa, Packets &packets, unsig
     unsigned int   *accum_dfa_state_table_lengths;//Note: arrays contain accumulated values
     unsigned int *d_accum_dfa_state_table_lengths;
    
-	//cout << "------------- Preparing to launch kernel ---------------" << endl;
-	//cout << "Packets (Streams or Number of CUDA blocks in x-dimension): " << packets.get_payload_sizes().size() << endl;
+	/*cout << "------------- Preparing to launch kernel ---------------" << endl;
+	cout << "Packets (Streams or Number of CUDA blocks in x-dimension): " << packets.get_payload_sizes().size() << endl;
 	
-	//cout << "Accumulated number of symbol per packet (stream): ";
-	//for (int i = 0; i < packets.get_payload_sizes().size(); i++)
-	//	cout << packets.get_payload_sizes()[i] << " ";
-	//cout << endl;
+	cout << "Accumulated number of symbol per packet (stream): ";
+	for (int i = 0; i < packets.get_payload_sizes().size(); i++)
+		cout << packets.get_payload_sizes()[i] << " ";
+	cout << endl;*/
     
 	//cout << "Threads per block: " << cfg.get_threads_per_block() << endl;
 		
@@ -88,9 +88,12 @@ unsigned int udfa_run(std::vector<FiniteAutomaton *> fa, Packets &packets, unsig
     
 	gettimeofday(&c0, NULL);
 
-	unsigned int tmp_avg_count = packets.get_payload_sizes()[packets.get_payload_sizes().size()-1]/packets.get_payload_sizes().size()*60/n_subsets;//just for now, size of each match array for each packet//????????
+	unsigned int tmp_avg_count = packets.get_payload_sizes()[0]*15/n_subsets;//just for now, size of each match array for each packet//????????
 	
-	cout << "Maximum matches allowed:  " << (tmp_avg_count*packets.get_payload_sizes().size()*n_subsets) << endl;
+	cout << "tmp_avg_count: "   << tmp_avg_count
+         << ", n_packets: "     << packets.get_payload_sizes().size() 
+         << ", n_subsets: "     << n_subsets
+         << ", Maximum matches allowed: " << (tmp_avg_count*packets.get_payload_sizes().size()*n_subsets) << endl;
 	
 	h_match_array         = (match_type*)malloc ((tmp_avg_count*packets.get_payload_sizes().size()) * n_subsets * sizeof(match_type));//just for now
     h_match_count         = (unsigned int*)malloc ((              packets.get_payload_sizes().size()) * n_subsets * sizeof(unsigned int));//just for now  
@@ -212,22 +215,19 @@ unsigned int udfa_run(std::vector<FiniteAutomaton *> fa, Packets &packets, unsig
     cudaUnbindTexture(tex_dfa_state_tables);
 #endif
 	
-	seconds  = c2.tv_sec  - c1.tv_sec;
-	useconds = c2.tv_usec - c1.tv_usec;
-    *t_kernel= ((double)seconds * 1000 + (double)useconds/1000.0);
-	printf("host_functions.cu: t_kernel= %lf(ms)\n", *t_kernel);
-	
 	cudaMemcpy( h_match_count, d_match_count,                packets.get_payload_sizes().size()  * n_subsets * sizeof(unsigned int), cudaMemcpyDeviceToHost);
 	cudaMemcpy( h_match_array, d_match_array, (tmp_avg_count*packets.get_payload_sizes().size()) * n_subsets * sizeof(match_type), cudaMemcpyDeviceToHost);
-	
+
+    gettimeofday(&c3, NULL);	
+
 	// Collect results
 	//Temporarily comment the following FOR loop
 	unsigned int total_matches=0;
 	for (unsigned int i = 0; i < n_subsets; i++) {
 #ifdef TEXTURE_MEM_USE
-        strcpy (filename,"../bin/data/Report_tex_");
+        strcpy (filename,"Report_tex_");
 #else
-        strcpy (filename,"../bin/data/Report_global_");
+        strcpy (filename,"Report_global_");
 #endif
 		snprintf(bufftmp, sizeof(bufftmp),"%d",n_subsets);
 		strcat (filename,bufftmp);
@@ -244,7 +244,7 @@ unsigned int udfa_run(std::vector<FiniteAutomaton *> fa, Packets &packets, unsig
 	}
 	printf("Host - Total number of matches %d\n", total_matches);
 
-    gettimeofday(&c3, NULL);
+    gettimeofday(&c33, NULL);
 	
 	// Free some memory
 	cudaFree(d_match_count);
@@ -272,9 +272,13 @@ unsigned int udfa_run(std::vector<FiniteAutomaton *> fa, Packets &packets, unsig
 	useconds   = c3.tv_usec - c2.tv_usec;
     *t_collect = ((double)seconds * 1000 + (double)useconds/1000.0);
 
-	seconds  = c4.tv_sec  - c3.tv_sec;
-	useconds = c4.tv_usec - c3.tv_usec;
+	seconds  = c4.tv_sec  - c33.tv_sec;
+	useconds = c4.tv_usec - c33.tv_usec;
     *t_free  = ((double)seconds * 1000 + (double)useconds/1000.0);
+
+	seconds  = c33.tv_sec  - c3.tv_sec;
+	useconds = c33.tv_usec - c3.tv_usec;
+	printf("host_functions.cu: t_postprocesscpu= %lf(ms)\n", ((double)seconds * 1000 + (double)useconds/1000.0));
 	
 	return 0;
 }
